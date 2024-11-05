@@ -124,6 +124,7 @@ public class Service
 {
     private string date;
     private Client client;
+    private Employee employee;
 
     public Service(Client client){
         this.client = client;
