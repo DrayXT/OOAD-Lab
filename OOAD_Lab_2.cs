@@ -56,7 +56,7 @@ public class BankAccount : IPayment
     {
         this.balance = newBalance;
     }
-    public Card createCard() 
+    public createCard() 
     {
         if(available == true)
         {
