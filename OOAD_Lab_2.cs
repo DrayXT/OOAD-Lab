@@ -123,7 +123,11 @@ public class Transaction
 public class Service
 {
     private string date;
+    private Client client;
 
+    public Service(Client client){
+        this.client = client;
+    }
     public bool sendToEmp() 
     {
         ///
@@ -134,10 +138,11 @@ public class Service
     }
     public static Result credit(Client client) 
     {
-        bool check = sendToEmp(this);
+        Service service = new Service();
+        bool check = sendToEmp(service);
         if (check == true)
         {
-            return Result.GetResult(this);
+            return Result.GetResult(service);
         }
     }
     public static Result mortgage(Client client) { }
