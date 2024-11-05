@@ -33,7 +33,7 @@ public class Employee : Client
 
 interface IPayment
 {
-    void pay(IPayment receiver, double amount);
+    void pay(double amount);
     void receive(double amount);
     void block(IPayment payment);
 }
@@ -65,10 +65,9 @@ public class BankAccount : IPayment
             return card;
         }
     }
-    void pay(IPayment receiver, double amount) 
+    void pay(double amount) 
     {
         balance -= amount;
-        receiver.receive(amount);
     }
     void receive(double amount)
     {
@@ -92,10 +91,8 @@ public class Card : IPayment
         this.account = account;
     }
     public void changePinCode() { }
-    void pay(IPayment receiver, double amount) 
-    {
-
-    }
+    void pay(double amount){ }
+    void receive(double amount){ }
     void block(IPayment payment) { }
 }
 
@@ -113,7 +110,8 @@ public class Transaction
         bool result = checkTransaction();
         if(result == true)
         {
-            sender.pay(receiver, amount);
+            sender.pay(amount);
+            receiver.receive(amount);
         }
     }
     public bool checkTransaction() { }
@@ -154,9 +152,15 @@ public class Result
 {
     private string document;
     private bool successful;
+    private Client client;
+    private Service service;
 
-    public static Result GetResult(Service service, bool success) { 
+    public Result(Client client, Service service, bool success) { 
         ///
+        Result result = new Result();
+        this.successful = success;
+        this.client = client;
+        this.service = service;
         return result;
     }
 }
