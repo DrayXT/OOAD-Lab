@@ -4,7 +4,7 @@ public class Client
     private string passport;
     private string birthDate;
     private string phoneNubmer;
-    private List<BankAccaunt> accauntList;
+    private List<Bankaccount> accountList;
     private List<Transaction> transactionList;
 
     public void createTransaction(IPayment sender, IPayment receiver, double amount) 
@@ -14,9 +14,9 @@ public class Client
         transactionList.Add(transaction);
     }
     public void createAccount(string type, string currency) { }
-    public void createCard(BankAccaunt accaunt) 
+    public void createCard(Bankaccount account) 
     {
-        accaunt.createCard();
+        account.createCard();
     }
 }
 
@@ -60,7 +60,7 @@ public class BankAccount : IPayment
     {
         if(available == true)
         {
-            Card card = new Card();
+            Card card = new Card(this);
             cards.Add(card);
             return card;
         }
@@ -86,7 +86,11 @@ public class Card : IPayment
     private string owner;
     private string pinCode;
     private bool available;
+    private BankAccount account;
 
+    public Card(BankAccount account){
+        this.account = account;
+    }
     public void changePinCode() { }
     void pay(IPayment receiver, double amount) 
     {
@@ -128,15 +132,15 @@ public class Service
         bool check = employee.approve(this);
         return check;
     }
-    public static Result credit() 
+    public static Result credit(Client client) 
     {
-        bool check = sendToEmp();
+        bool check = sendToEmp(this);
         if (check == true)
         {
             return Result.GetResult(this);
         }
     }
-    public static Result mortgage() { }
+    public static Result mortgage(Client client) { }
 }
 
 
@@ -145,5 +149,8 @@ public class Result
     private string document;
     private bool successful;
 
-    public static Result GetResult(Service service) { }
+    public static Result GetResult(Service service, bool success) { 
+        ///
+        return result;
+    }
 }
