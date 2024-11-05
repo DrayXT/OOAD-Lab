@@ -116,6 +116,7 @@ public class Transaction
         {
             sender.pay(amount);
             receiver.receive(amount);
+            successful = true;
         }
     }
     public bool checkTransaction() { }
