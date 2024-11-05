@@ -45,9 +45,13 @@ public class BankAccount : IPayment
     private string type;
     private double balance;
     private string currency;
-    private bool available;
+    private bool ilable;
     private List<Card> cards;
-
+    
+    public bool isAvailable()
+    {
+        return available;
+    }
     public double getBalance()
     {
         return this.balance;
@@ -58,7 +62,7 @@ public class BankAccount : IPayment
     }
     public createCard() 
     {
-        if(available == true)
+        if(ilable == true)
         {
             Card card = new Card(this);
             cards.Add(card);
